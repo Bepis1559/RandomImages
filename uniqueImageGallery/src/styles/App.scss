@@ -1,0 +1,79 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+input,
+textarea,
+button,
+select {
+  font: inherit;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+body {
+  min-height: 100vh;
+  background: #333 !important;
+}
+html {
+  color-scheme: dark light;
+}
+
+/* =============================== */
+$imagesMinWidth: 150px;
+$imagesHeight: 100px;
+.gallery {
+  justify-items: center;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($imagesMinWidth, 1fr));
+  grid-auto-rows: $imagesHeight;
+  row-gap: 1em;
+
+  div.imageContainer {
+    width: $imagesMinWidth;
+    height: $imagesHeight;
+
+    img {
+      cursor: pointer;
+      border-radius: 1em;
+    }
+  }
+}
+.Add_btn-container {
+  display: flex;
+  margin-block: 2em 3em;
+
+  #AddButton {
+    margin-inline: auto;
+  }
+}
+
+.individualImgContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(1.4rem + 0.4vw, 1.8rem + 1vw, 2.5rem + 1.3vw);
+  gap: calc(1em + 0.5vw);
+  color: whitesmoke;
+
+  h1 {
+    font-size: inherit;
+  }
+
+  img.individualImage {
+    border-radius: 15px;
+  }
+}
