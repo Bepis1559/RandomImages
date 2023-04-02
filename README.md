@@ -2,7 +2,7 @@ How to start the app :
 
 1. Type "cd uniqueImageGallery" in the terminal , then npm run dev to start the vite app. 
 
-2. Theh cd .. ; cd server ; npm run server to start the server . 
+2. Then cd .. ; cd server ; npm run server to start the server . 
 
 
 
