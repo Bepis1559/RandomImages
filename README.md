@@ -20,14 +20,14 @@ How to use the app :
 
 * Each image is a route path (Link) to a separate page , containing this individual image and the name part of the email.
 
-* You can either click the image or in the url tab type /"your name" at the end of the URL in order to go to the particular character.
+* You can either click the image or in the url tab type /"your name" at the end of the url in order to go to the particular character.
 
 
 How to use the server :
 
 * After it is started , you can go to http://localhost:5000/users/ in your browser , where you will see the 
 list of users , that have been added so far. If you want to see an individual user , add /"the user email" 
-to the end of the URL.
+to the end of the url.
 
 
 
