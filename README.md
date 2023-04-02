@@ -1,8 +1,13 @@
 How to start the app : 
 
-1. Type "cd uniqueImageGallery" in the terminal , then npm run dev to start the vite app. 
+1. Type  the following commands in the terminal : 
 
-2. Then cd .. ; cd server ; npm run server to start the server . 
+git clone https://github.com/Bepis1559/RandomImages.git 
+cd uniqueImageGallery
+npm i
+npm run dev (to start the vite app) 
+
+2. Then cd .. ; cd server ; npm i ; npm run server to start the server . 
 
 
 
