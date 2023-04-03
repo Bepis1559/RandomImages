@@ -1,4 +1,5 @@
 import { ReactElement, createContext, useEffect, useState } from "react";
+import { fetchDataAndSet } from "../helpers/FetchData";
 
 const URL = "http://localhost:5000/users";
 
@@ -20,16 +21,7 @@ export const MyContextProvider = ({ children }: { children: ReactElement }) => {
   const [images, setImages] = useState<Image[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(URL);
-        const data = await response.json();
-        setImages(data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
+    fetchDataAndSet(setImages, URL);
   }, []);
 
   const ProviderValue: ContextValues = {
