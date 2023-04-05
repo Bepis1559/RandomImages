@@ -1,19 +1,18 @@
 import validator from "validator";
 import { KeyboardEvent } from "react";
 
-export const fetchEmails = async (setTakenEmails: React.Dispatch<React.SetStateAction<string[] | undefined>>, URL: string) => {
+export const fetchEmailsAndSetBusy = async (setFunction: React.Dispatch<React.SetStateAction<string[] | undefined>>, URL: string) => {
     const response = await fetch(URL);
     const result: Image[] = await response.json(); // array of objects
     const busyEmails = result.map((el) => el.email); // array of emails
-    setTakenEmails(busyEmails);
+    setFunction(busyEmails);
 };
 
 
-export const takenEmailCheck = (setTakenEmails: React.Dispatch<React.SetStateAction<string[] | undefined>>, URL: string, takenEmails: string[] | undefined, email: string) => {
-    fetchEmails(setTakenEmails, URL);
+export const takenEmailCheck = (setFunction: React.Dispatch<React.SetStateAction<string[] | undefined>>, URL: string, takenEmails: string[] | undefined, email: string) => {
+    fetchEmailsAndSetBusy(setFunction, URL);
     return takenEmails?.includes(email);
 }
-
 
 export const validEmailCheck = (email: string) => validator.isEmail(email)
 

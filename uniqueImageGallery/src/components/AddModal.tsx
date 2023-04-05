@@ -3,8 +3,8 @@ import {
   ReactElement,
   KeyboardEvent,
   useContext,
-  useState,
   useEffect,
+  useState,
 } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -12,7 +12,7 @@ import { MyContext } from "../context/Context";
 import { v4 as uuidv4 } from "uuid";
 import { ApiRequest } from "../helpers/ApiRequest";
 import {
-  fetchEmails,
+  fetchEmailsAndSetBusy,
   imageFormatCheck,
   imageTypeCheck,
   takenEmailCheck,
@@ -21,38 +21,39 @@ import {
 import { Email } from "./AddModalComponents/Email";
 import { ImageFormat } from "./AddModalComponents/ImageFormat";
 import { ImageType } from "./AddModalComponents/ImageType";
-const URL = "http://localhost:5000/users";
 
 export const AddModal = (props: modalProps): ReactElement => {
   const { onHide } = props;
 
+  const [email, setEmail] = useState("boxi123@gmail.com");
+  const [imageFormat, setImageFormat] = useState("jpg");
+  const [imageType, setImageType] = useState(1);
+  const [isEmailTaken, setIsEmailTaken] = useState(false);
   const [takenEmails, setTakenEmails] = useState<string[]>();
 
+  const { setImages, URL } = useContext(MyContext);
+
   useEffect(() => {
-    fetchEmails(setTakenEmails, URL);
+    fetchEmailsAndSetBusy(setTakenEmails, URL);
   }, []);
 
-  const {
-    email,
-    setEmail,
-    imageFormat,
-    setImageFormat,
-    imageType,
-    setImageType,
-    setImages,
-  } = useContext(MyContext);
-
-  const handleSubmit = (e: MouseEvent | KeyboardEvent) => {
-    e.preventDefault();
-
-    const isTaken = takenEmailCheck(setTakenEmails, URL, takenEmails, email);
-
+  const submitCheck = () => {
     if (
       validEmailCheck(email) &&
       imageFormatCheck(imageFormat) &&
       imageTypeCheck(imageType) &&
-      !isTaken
+      !takenEmailCheck(setTakenEmails, URL, takenEmails, email)
     ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleSubmit = (e: MouseEvent | KeyboardEvent) => {
+    e.preventDefault();
+
+    if (submitCheck()) {
       onHide();
       setImages((prevImages: Image[]) => [
         ...prevImages,
@@ -75,7 +76,6 @@ export const AddModal = (props: modalProps): ReactElement => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(apiRequestBody),
       };
-
       ApiRequest(URL, postOptions);
     }
   };
@@ -97,10 +97,12 @@ export const AddModal = (props: modalProps): ReactElement => {
         <form action="/action_page.php">
           <Email
             email={email}
-            setEmail={setEmail}
             setTakenEmails={setTakenEmails}
-            takenEmails={takenEmails}
             URL={URL}
+            takenEmails={takenEmails}
+            setIsEmailTaken={setIsEmailTaken}
+            setEmail={setEmail}
+            isEmailTaken={isEmailTaken}
           />
           <ImageFormat
             imageFormat={imageFormat}
@@ -122,3 +124,6 @@ export const AddModal = (props: modalProps): ReactElement => {
     </Modal>
   );
 };
+function setIsEmailTaken(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}

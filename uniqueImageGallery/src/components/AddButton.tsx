@@ -5,10 +5,14 @@ import { AddModal } from "./AddModal";
 export const AddButton = (): ReactElement => {
   const [show, setShow] = useState(false);
 
+  const handleClick = () => {
+    setShow(true);
+  };
+
   return (
     <>
       <div className="Add_btn-container">
-        <Button id="AddButton" variant="success" onClick={() => setShow(true)}>
+        <Button id="AddButton" variant="success" onClick={handleClick}>
           +
         </Button>
       </div>

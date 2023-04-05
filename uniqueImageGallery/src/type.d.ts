@@ -16,21 +16,18 @@ type imageType = number
 
 type setImageType = (imageType: number) => void;
 
+
+
 type modalProps = {
     show: boolean
     onHide: () => void
 }
 
 
-type ContextValues = {
-    email: string;
-    setEmail: setEmail
-    imageFormat: imageFormat;
-    setImageFormat: setImageFormat;
-    imageType: imageType;
-    setImageType: setImageType
+type ProviderValueProps = {
     images: ReactElement<Image>[]
     setImages: (image: ReactElement<Image>) => void
+    URL: string
 }
 
 type Image = {
@@ -45,11 +42,15 @@ type Image = {
 
 
 type emailProps = {
-    email: string
-    setEmail: setEmail
-    setTakenEmails: React.Dispatch<React.SetStateAction<string[] | undefined>>,
-    takenEmails: string[] | undefined,
+    email: string;
+    setTakenEmails: React.Dispatch<React.SetStateAction<string[] | undefined>>
     URL: string
+    takenEmails: string[] | undefined
+    setIsEmailTaken: React.Dispatch<React.SetStateAction<boolean>>
+    setEmail: setEmail
+    isEmailTaken: boolean
+
+
 }
 
 type imageFormatProps = {

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import {
   doNotAllowSpaces,
   takenEmailCheck,
@@ -6,9 +6,37 @@ import {
 } from "../../helpers/AddModalHelpers";
 import { ValidFeedback } from "./ValidFeedback";
 import { InvalidFeedback } from "./InvalidFeedback";
+import { useDebounce } from "use-debounce";
 
 export const Email = (props: emailProps): ReactElement => {
-  const { email, setEmail, setTakenEmails, takenEmails, URL } = props;
+  const {
+    email,
+    setEmail,
+    setIsEmailTaken,
+    takenEmails,
+    setTakenEmails,
+    URL,
+    isEmailTaken,
+  } = props;
+
+  const [debouncedEmail] = useDebounce(email, 1);
+
+  useEffect(() => {
+    handleUseEffect(takenEmailCheck(setTakenEmails, URL, takenEmails, email));
+  }, [email]);
+
+  useEffect(() => {
+    handleUseEffect(takenEmails?.includes(debouncedEmail));
+  }, [takenEmails]);
+
+  function handleUseEffect(condition: boolean | undefined) {
+    if (condition) {
+      setIsEmailTaken(true);
+    } else {
+      setIsEmailTaken(false);
+    }
+  }
+
   return (
     <>
       <div className="mb-3 mt-3">
@@ -22,10 +50,7 @@ export const Email = (props: emailProps): ReactElement => {
           onChange={(e) => setEmail(e.target.value)}
           type="email"
           className={`form-control ${
-            validEmailCheck(email) &&
-            !takenEmailCheck(setTakenEmails, URL, takenEmails, email)
-              ? "is-valid"
-              : "is-invalid"
+            validEmailCheck(email) && !isEmailTaken ? "is-valid" : "is-invalid"
           }`}
           id="email"
           placeholder="Enter email"
