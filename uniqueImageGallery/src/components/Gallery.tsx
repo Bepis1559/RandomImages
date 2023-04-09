@@ -18,7 +18,11 @@ const Gallery = (): ReactElement => {
     [images],
   );
 
-  return <main className="gallery">{memoizedImages}</main>;
+  return (
+    <main data-testid="gallery" className="gallery">
+      {memoizedImages}
+    </main>
+  );
 };
 
 export default Gallery;
