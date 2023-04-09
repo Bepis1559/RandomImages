@@ -5,16 +5,20 @@ import {
   useContext,
   useEffect,
   useState,
+  useCallback,
 } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { MyContext } from "../context/Context";
 import { v4 as uuidv4 } from "uuid";
-import { fetchEmailsAndSetBusy } from "../helpers/AddModalHelpers";
+import { fetchEmailsAndSetTaken } from "../helpers/AddModalHelpers";
 import Email from "./AddModalComponents/Email";
 import ImageFormat from "./AddModalComponents/ImageFormat";
 import ImageType from "./AddModalComponents/ImageType";
 import { submitCheck } from "../helpers/AddModalHelpers";
+import { ApiRequest } from "../helpers/ApiRequest";
+import { GetURL } from "../helpers/GetURL";
+const URL = GetURL();
 
 export const AddModal = (props: modalProps): ReactElement => {
   const { onHide } = props;
@@ -25,11 +29,18 @@ export const AddModal = (props: modalProps): ReactElement => {
   const [isEmailTaken, setIsEmailTaken] = useState(false);
   const [takenEmails, setTakenEmails] = useState<string[]>();
 
-  const { URL, addImage } = useContext(MyContext);
+  const { setImages } = useContext(MyContext);
 
   useEffect(() => {
-    fetchEmailsAndSetBusy(setTakenEmails, URL);
+    fetchEmailsAndSetTaken(setTakenEmails, URL);
   }, []);
+
+  const addImage = useCallback(
+    (newImage: Image) => {
+      setImages((prevImages: Image[]) => [...prevImages, newImage]);
+    },
+    [setImages],
+  );
 
   const handleSubmit = (e: MouseEvent | KeyboardEvent) => {
     e.preventDefault();
@@ -63,9 +74,7 @@ export const AddModal = (props: modalProps): ReactElement => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(apiRequestBody),
       };
-      import("../helpers/ApiRequest").then((module) => {
-        module.ApiRequest(URL, postOptions);
-      });
+      ApiRequest(URL, postOptions);
     }
   };
 

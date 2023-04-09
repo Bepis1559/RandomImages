@@ -1,18 +1,20 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/App.scss";
 import Home from "./pages/Home";
+import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
-import { MyContextProvider } from "./context/Context";
-import IndividualImage from "./pages/IndividualImage";
+import { ArrayOfSkeletonPosts } from "./components/skeletons/ArrayOfSkeletonPosts";
 
 function App() {
+  const IndividualImage = lazy(() => import("./pages/IndividualImage"));
+
   return (
-    <MyContextProvider>
+    <Suspense fallback={<ArrayOfSkeletonPosts />}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/:name" element={<IndividualImage />} />
       </Routes>
-    </MyContextProvider>
+    </Suspense>
   );
 }
 

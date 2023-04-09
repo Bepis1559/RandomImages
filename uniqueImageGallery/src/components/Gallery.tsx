@@ -1,6 +1,5 @@
 import { ReactElement, useContext, useMemo } from "react";
 import { MyContext } from "../context/Context";
-import { v4 as uuidv4 } from "uuid";
 import { Image } from "./Image";
 
 const Gallery = (): ReactElement => {
@@ -8,9 +7,9 @@ const Gallery = (): ReactElement => {
 
   const memoizedImages = useMemo(
     () =>
-      images.map((image) => (
+      images.map((image, index) => (
         <Image
-          key={uuidv4()}
+          key={index.toString()}
           email={image.email}
           imageFormat={image.imageFormat}
           imageType={image.imageType}

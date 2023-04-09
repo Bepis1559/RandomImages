@@ -30,8 +30,8 @@ type modalProps = {
 
 type ProviderValueProps = {
     images: ReactElement<Image>[]
-    URL: string
-    addImage: (newImage: Image) => void
+    setImages: (value: React.SetStateAction<Image[]>) => void
+
 }
 
 type Image = {

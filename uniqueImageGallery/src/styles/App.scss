@@ -3,11 +3,7 @@
 *::after {
   box-sizing: border-box;
 }
-:root {
-  --MAIN-BORDER: #333;
-  --POST-BGCOLOR: #0a0a0a;
-  --BOX-SHADOW: rgb(0, 0, 0, 0.5);
-}
+
 img,
 picture,
 svg,
@@ -35,6 +31,19 @@ html {
 }
 
 /* =============================== */
+
+.post {
+  --MAIN-BORDER: #333;
+  --POST-BGCOLOR: #0a0a0a;
+  --BOX-SHADOW: rgb(0, 0, 0, 0.5);
+  background-color: var(--POST-BGCOLOR);
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid var(--MAIN-BORDER);
+  border-radius: 1rem;
+  box-shadow: 2px 2px 5px 2px var(--BOX-SHADOW);
+}
+
 $imagesMinWidth: 150px;
 $imagesHeight: 100px;
 .gallery {
@@ -65,11 +74,17 @@ $imagesHeight: 100px;
 }
 
 .individualImgContainer {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin-block-start: calc(4em + 4vh + 4vw);
+  h1 {
+    margin-inline-end: 1em;
+    display: inline;
+  }
+  .imageContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  text-align: center;
   font-size: clamp(1.4rem + 0.4vw, 1.8rem + 1vw, 2.5rem + 1.3vw);
   gap: calc(1em + 0.5vw);
   color: whitesmoke;
@@ -83,11 +98,9 @@ $imagesHeight: 100px;
   }
 }
 
-.post {
-  background-color: var(--POST-BGCOLOR);
-  padding: 1rem;
-  margin: 1rem;
-  border: 1px solid var(--MAIN-BORDER);
-  border-radius: 1rem;
-  box-shadow: 2px 2px 5px 2px var(--BOX-SHADOW);
+.ErrorContainer {
+  background-image: url("../assets/404.png");
+  min-height: 100vh;
+  background-position: 50% 25%;
+  opacity: 0.5;
 }

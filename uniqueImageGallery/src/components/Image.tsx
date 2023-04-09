@@ -1,7 +1,6 @@
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ExtractName } from "../helpers/ExtractName";
-import { SkeletonPost } from "./skeletons/SkeletonPost";
 
 export const Image = ({
   email,
@@ -13,7 +12,7 @@ export const Image = ({
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (containerRef.current) {
       const container = containerRef.current;
       const containerStyle = window.getComputedStyle(container);
