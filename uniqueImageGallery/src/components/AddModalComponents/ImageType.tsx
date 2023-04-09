@@ -3,11 +3,12 @@ import {
   doNotAllowSpaces,
   imageTypeCheck,
 } from "../../helpers/AddModalHelpers";
-import { ValidFeedback } from "./ValidFeedback";
-import { InvalidFeedback } from "./InvalidFeedback";
+import InvalidFeedback from "./InvalidFeedback";
+import ValidFeedback from "./ValidFeedback";
 
-export const ImageType = (props: imageTypeProps): ReactElement => {
+const ImageType = (props: imageTypeProps): ReactElement => {
   const { imageType, setImageType } = props;
+
   return (
     <>
       <div className="mb-3 ">
@@ -42,3 +43,5 @@ export const ImageType = (props: imageTypeProps): ReactElement => {
     </>
   );
 };
+
+export default ImageType;

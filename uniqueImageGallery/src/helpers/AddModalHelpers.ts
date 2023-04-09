@@ -39,3 +39,16 @@ export const imageTypeCheck = (imageType: number) => {
 
 export const doNotAllowSpaces = (e: KeyboardEvent) =>
     e.key.charCodeAt(0) === 32 ? e.preventDefault() : null;
+
+export const submitCheck = (email: string, imageFormat: string, imageType: number, setTakenEmails: setFunction, URL: string, takenEmails: string[] | undefined) => {
+    if (
+        validEmailCheck(email) &&
+        imageFormatCheck(imageFormat) &&
+        imageTypeCheck(imageType) &&
+        !takenEmailCheck(setTakenEmails, URL, takenEmails, email)
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+};

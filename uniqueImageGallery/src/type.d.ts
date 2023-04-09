@@ -1,4 +1,3 @@
-type takenEmailCheck = (setTakenEmails: React.Dispatch<React.SetStateAction<string[] | undefined>>, URL: string, takenEmails: string[] | undefined, email: string) => boolean | undefined
 
 type doNotAllowSpaces = (e: KeyboardEvent<Element>) => void | null
 
@@ -16,6 +15,11 @@ type imageType = number
 
 type setImageType = (imageType: number) => void;
 
+type setFunction = React.Dispatch<React.SetStateAction<string[] | undefined>>
+
+type takenEmailCheck = (setTakenEmails: setFunction, URL: string, takenEmails: string[] | undefined, email: string) => boolean | undefined
+
+
 
 
 type modalProps = {
@@ -26,8 +30,8 @@ type modalProps = {
 
 type ProviderValueProps = {
     images: ReactElement<Image>[]
-    setImages: (image: ReactElement<Image>) => void
     URL: string
+    addImage: (newImage: Image) => void
 }
 
 type Image = {

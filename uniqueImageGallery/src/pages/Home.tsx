@@ -1,12 +1,15 @@
-import { ReactElement } from "react";
+import { ReactElement, Suspense } from "react";
 import { AddButton } from "../components/AddButton";
-import { Gallery } from "../components/Gallery";
+import Gallery from "../components/Gallery";
 
-export const Home = (): ReactElement => {
+const Home = (): ReactElement => {
   return (
     <>
       <AddButton />
+
       <Gallery />
     </>
   );
 };
+
+export default Home;

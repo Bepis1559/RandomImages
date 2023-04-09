@@ -1,5 +1,7 @@
 import { ReactElement } from "react";
 
-export const ValidFeedback = (): ReactElement => (
+const ValidFeedback = (): ReactElement => (
   <div className="valid-feedback">Looks good</div>
 );
+
+export default ValidFeedback;

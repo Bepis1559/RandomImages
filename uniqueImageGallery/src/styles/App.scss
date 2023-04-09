@@ -3,6 +3,11 @@
 *::after {
   box-sizing: border-box;
 }
+:root {
+  --MAIN-BORDER: #333;
+  --POST-BGCOLOR: #0a0a0a;
+  --BOX-SHADOW: rgb(0, 0, 0, 0.5);
+}
 img,
 picture,
 svg,
@@ -76,4 +81,13 @@ $imagesHeight: 100px;
   img.individualImage {
     border-radius: 15px;
   }
+}
+
+.post {
+  background-color: var(--POST-BGCOLOR);
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid var(--MAIN-BORDER);
+  border-radius: 1rem;
+  box-shadow: 2px 2px 5px 2px var(--BOX-SHADOW);
 }

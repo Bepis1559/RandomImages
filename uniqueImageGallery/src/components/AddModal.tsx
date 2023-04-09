@@ -10,17 +10,11 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { MyContext } from "../context/Context";
 import { v4 as uuidv4 } from "uuid";
-import { ApiRequest } from "../helpers/ApiRequest";
-import {
-  fetchEmailsAndSetBusy,
-  imageFormatCheck,
-  imageTypeCheck,
-  takenEmailCheck,
-  validEmailCheck,
-} from "../helpers/AddModalHelpers";
-import { Email } from "./AddModalComponents/Email";
-import { ImageFormat } from "./AddModalComponents/ImageFormat";
-import { ImageType } from "./AddModalComponents/ImageType";
+import { fetchEmailsAndSetBusy } from "../helpers/AddModalHelpers";
+import Email from "./AddModalComponents/Email";
+import ImageFormat from "./AddModalComponents/ImageFormat";
+import ImageType from "./AddModalComponents/ImageType";
+import { submitCheck } from "../helpers/AddModalHelpers";
 
 export const AddModal = (props: modalProps): ReactElement => {
   const { onHide } = props;
@@ -31,39 +25,32 @@ export const AddModal = (props: modalProps): ReactElement => {
   const [isEmailTaken, setIsEmailTaken] = useState(false);
   const [takenEmails, setTakenEmails] = useState<string[]>();
 
-  const { setImages, URL } = useContext(MyContext);
+  const { URL, addImage } = useContext(MyContext);
 
   useEffect(() => {
     fetchEmailsAndSetBusy(setTakenEmails, URL);
   }, []);
 
-  const submitCheck = () => {
-    if (
-      validEmailCheck(email) &&
-      imageFormatCheck(imageFormat) &&
-      imageTypeCheck(imageType) &&
-      !takenEmailCheck(setTakenEmails, URL, takenEmails, email)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   const handleSubmit = (e: MouseEvent | KeyboardEvent) => {
     e.preventDefault();
 
-    if (submitCheck()) {
+    const isSubmittedDataOK = submitCheck(
+      email,
+      imageFormat,
+      imageType,
+      setTakenEmails,
+      URL,
+      takenEmails,
+    );
+
+    if (isSubmittedDataOK) {
       onHide();
-      setImages((prevImages: Image[]) => [
-        ...prevImages,
-        {
-          key: uuidv4(),
-          email,
-          imageFormat,
-          imageType,
-        },
-      ]);
+      addImage({
+        key: uuidv4(),
+        email,
+        imageFormat,
+        imageType,
+      });
 
       const apiRequestBody: Image = {
         email: email,
@@ -76,7 +63,9 @@ export const AddModal = (props: modalProps): ReactElement => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(apiRequestBody),
       };
-      ApiRequest(URL, postOptions);
+      import("../helpers/ApiRequest").then((module) => {
+        module.ApiRequest(URL, postOptions);
+      });
     }
   };
 
@@ -109,6 +98,7 @@ export const AddModal = (props: modalProps): ReactElement => {
             setImageFormat={setImageFormat}
           />
           <ImageType imageType={imageType} setImageType={setImageType} />
+
           <button
             onClick={(e) => handleSubmit(e)}
             type="submit"
@@ -124,6 +114,3 @@ export const AddModal = (props: modalProps): ReactElement => {
     </Modal>
   );
 };
-function setIsEmailTaken(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}

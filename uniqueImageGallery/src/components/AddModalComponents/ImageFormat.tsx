@@ -3,11 +3,12 @@ import {
   doNotAllowSpaces,
   imageFormatCheck,
 } from "../../helpers/AddModalHelpers";
-import { ValidFeedback } from "./ValidFeedback";
-import { InvalidFeedback } from "./InvalidFeedback";
+import InvalidFeedback from "./InvalidFeedback";
+import ValidFeedback from "./ValidFeedback";
 
-export const ImageFormat = (props: imageFormatProps): ReactElement => {
+const ImageFormat = (props: imageFormatProps): ReactElement => {
   const { imageFormat, setImageFormat } = props;
+
   return (
     <>
       <div className="mb-3">
@@ -39,3 +40,5 @@ export const ImageFormat = (props: imageFormatProps): ReactElement => {
     </>
   );
 };
+
+export default ImageFormat;

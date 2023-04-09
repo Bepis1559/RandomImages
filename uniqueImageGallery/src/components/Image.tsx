@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useRef, useState } from "react";
-import { ExtractName } from "../helpers/ExtractName";
 import { Link } from "react-router-dom";
+import { ExtractName } from "../helpers/ExtractName";
+import { SkeletonPost } from "./skeletons/SkeletonPost";
 
 export const Image = ({
   email,

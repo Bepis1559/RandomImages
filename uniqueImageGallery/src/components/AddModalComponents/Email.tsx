@@ -4,11 +4,11 @@ import {
   takenEmailCheck,
   validEmailCheck,
 } from "../../helpers/AddModalHelpers";
-import { ValidFeedback } from "./ValidFeedback";
-import { InvalidFeedback } from "./InvalidFeedback";
+import InvalidFeedback from "./InvalidFeedback";
+import ValidFeedback from "./ValidFeedback";
 import { useDebounce } from "use-debounce";
 
-export const Email = (props: emailProps): ReactElement => {
+const Email = (props: emailProps): ReactElement => {
   const {
     email,
     setEmail,
@@ -19,17 +19,22 @@ export const Email = (props: emailProps): ReactElement => {
     isEmailTaken,
   } = props;
 
-  const [debouncedEmail] = useDebounce(email, 1);
+  const [debouncedEmail] = useDebounce(email, 1000);
+  useEffect(() => {
+    const isEmailTaken = takenEmailCheck(
+      setTakenEmails,
+      URL,
+      takenEmails,
+      email,
+    );
+    setEmailTakenBasedOnCondition(isEmailTaken);
+  }, [debouncedEmail]);
 
   useEffect(() => {
-    handleUseEffect(takenEmailCheck(setTakenEmails, URL, takenEmails, email));
-  }, [email]);
-
-  useEffect(() => {
-    handleUseEffect(takenEmails?.includes(debouncedEmail));
+    setEmailTakenBasedOnCondition(takenEmails?.includes(email));
   }, [takenEmails]);
 
-  function handleUseEffect(condition: boolean | undefined) {
+  function setEmailTakenBasedOnCondition(condition: boolean | undefined) {
     if (condition) {
       setIsEmailTaken(true);
     } else {
@@ -63,3 +68,5 @@ export const Email = (props: emailProps): ReactElement => {
     </>
   );
 };
+
+export default Email;
